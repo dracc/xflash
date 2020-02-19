@@ -64,7 +64,7 @@ class XFlash(object):
         self.deviceCmd(CMD_DEV_VERSION, 0 , 4)
         buf = self.dev.read(self.ep_in, 4) # read 4 bytes
         buf = ''.join([chr(x) for x in buf])
-        return struct.unpack('<L', buf)[0]
+        return struct.unpack('<L', buf.encode('ascii'))[0]
         
     def xsvfInit(self):
         self.deviceReset()
@@ -155,7 +155,7 @@ class XFlash(object):
     
     @classmethod
     def compress(cls, ib):
-        ob = StringIO.StringIO()
+        ob = io.StringIO()
         
         rs = re = rl = 0
         while rs < len(ib):
