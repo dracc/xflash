@@ -22,7 +22,7 @@ CMD_XBOX_PWROFF = 0x11
 CMD_DEV_UPDATE  = 0xF0
 
 class XFlash(object):
-    def __init__(self, idVendor=0xffff, idProduct=0x4):
+    def __init__(self, idVendor=0x11d4, idProduct=0x8338):
         self.idVendor = idVendor
         self.idProduct = idProduct
         self.dev = None
