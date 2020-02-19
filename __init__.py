@@ -97,24 +97,24 @@ def main(argv=None):
     try:
         xf.deviceFind()
     except DeviceNotFoundError:
-        print 'XFlash USB device not found'
+        print('XFlash USB device not found')
         sys.exit(1)
     
     xf.deviceReset()
     
     start = length = end = 0
     
-    print "Using XFlash @ [%s:%s]" % (xf.dev.bus, xf.dev.address)
+    print("Using XFlash @ [%s:%s]" % (xf.dev.bus, xf.dev.address))
     if arguments.action in ('erase', 'write', 'read'):
         try:
             vers = xf.deviceVersion()
-            print 'ARM Version %s' % (vers)
+            print('ARM Version %s' % (vers))
             flashconfig = xf.flashInit()
-            print 'FlashConfig: 0x%08X' % (flashconfig)
+            print('FlashConfig: 0x%08X' % (flashconfig))
             xc = XConfig(flashconfig)
         except XConfigParseError as e:
-            print 'Flash Config is invalid!'
-            print e
+            print('Flash Config is invalid!')
+            print(e)
             sys.exit(1)
         except:
             xf.flashDeInit()
@@ -123,8 +123,8 @@ def main(argv=None):
         end = start + length
         
         if end > xc.sizesmallblocks:
-            print 'Error: tried to read past the nand length'
-            print 'NandSize: %X\tOperationEnd: %X' % (xc.sizeblocks, end)
+            print('Error: tried to read past the nand length')
+            print('NandSize: %X\tOperationEnd: %X' % (xc.sizeblocks, end))
             sys.exit(1)
     
     if arguments.action == 'erase':
@@ -147,19 +147,19 @@ def main(argv=None):
     if arguments.action == 'xsvf':
         vers = xf.xsvfInit()
         if vers < 3:
-            print 'ARM Version %s does not support xsvf flashing!' % vers
+            print('ARM Version %s does not support xsvf flashing!' % vers)
             sys.exit(1)
-        print 'ARM Version %s' % (vers)
+        print('ARM Version %s' % (vers))
         fbuf = arguments.file[0].read()
-        print 'Read 0x%x bytes OK' % (len(fbuf))
+        print('Read 0x%x bytes OK' % (len(fbuf)))
         buf = XFlash.compress(fbuf)
-        print 'Compressed to 0x%x bytes OK' % (len(buf))
+        print('Compressed to 0x%x bytes OK' % (len(buf)))
         xf.xsvfWrite(buf)
-        print '0x%x bytes sent OK' % (len(buf))
-        print 'Executing File...',
+        print('0x%x bytes sent OK' % (len(buf)))
+        print('Executing File...',)
         sys.stdout.flush()
         status = xf.xsvfExecute()
-        print 'OK!' if status == 0 else 'FAIL!'
+        print('OK!' if status == 0 else 'FAIL!')
         xf.deviceReset()
     
     if arguments.action == 'update':

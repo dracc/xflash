@@ -81,7 +81,7 @@ class XConfig(object):
             self.sizesmallblocks,
             self.fsblocks,
         )
-        print fmt
+        print(fmt)
 
 
 

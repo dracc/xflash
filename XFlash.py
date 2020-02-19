@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 import usb
 import struct
-import StringIO
+import io
 
-from xflash import XConfig
+import XConfig
 
 class DeviceNotFoundError(Exception):
     pass
